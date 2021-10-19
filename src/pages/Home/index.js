@@ -1,4 +1,4 @@
-import CourseList from "../../components/CourseList";
+import { CourseList } from "../../components";
 import Banner from "./components/Banner";
 import Carousel from "./components/Carousel";
 import CarouselBottom from "./components/CarouselBottom";

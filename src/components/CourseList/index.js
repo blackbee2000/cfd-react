@@ -1,6 +1,6 @@
 import CourseItem from "../CourseItem"
 
-export default function CourseList({title, description, smallTitle, name, list}){
+export function CourseList({title, description, smallTitle, name, list}){
     return(
         <section className="section-courseoffline">
             <div className="container">

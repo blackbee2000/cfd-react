@@ -1,6 +1,6 @@
 import BannerDetail from "./components/BannerDetail";
 import Content from "./components/Content";
-import CourseList from "../../components/CourseList";
+import { CourseList } from "../../components";
 
 export default function CourseDetail(){
     var list = [

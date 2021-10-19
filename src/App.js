@@ -1,5 +1,3 @@
-import Footer from "./components/Footer";
-import Header from "./components/Header";
 import Course from "./pages/Course";
 import Home from "./pages/Home";
 import Project from "./pages/Project";
@@ -13,6 +11,7 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Team from "./pages/Team";
 import Pay from "./pages/Pay";
+import { Header, Footer } from "./components";
 
 export default function App() {
   return (
