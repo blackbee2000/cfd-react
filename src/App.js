@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Course from "./pages/Course";
+import Home from "./pages/Home";
+import Project from "./pages/Project";
+import Page404 from "./pages/Page404";
+import CourseDetail from "./pages/CourseDetail";
+import Email from "./pages/Email";
+import Faq from "./pages/Faq";
+import CoinIntroduce from "./pages/CoinIntroduce";
+import Collab from "./pages/Collab";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import Team from "./pages/Team";
+import Pay from "./pages/Pay";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        <Header />
+        <Home />
+        {/* <Course /> */}
+        {/* <Project /> */}
+        {/* <Page404 /> */}
+        {/* <CourseDetail /> */}
+        {/* <Email /> */}
+        {/* <Faq /> */}
+        {/* <CoinIntroduce /> */}
+        {/* <Collab /> */}
+        {/* <Profile /> */}
+        {/* <Register /> */}
+        {/* <Team /> */}
+        {/* <Pay /> */}
+        <Footer />
+    </>
   );
 }
 
-export default App;
