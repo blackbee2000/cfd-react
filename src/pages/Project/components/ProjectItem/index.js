@@ -1,4 +1,4 @@
-export default function ProjectItem(nameProject, personProject){
+export default function ProjectItem({nameProject, personProject}){
     return(
         <a href="#" className="item col-md-6">
               <div className="wrap">

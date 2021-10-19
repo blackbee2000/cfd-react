@@ -1,7 +1,7 @@
 import ProjectList from "./components/ProjectList";
 
 export default function Project(){
-    var list = [
+    var listProject = [
         {
             nameProject: "Furnitown",
             personProject: "Trần Nghĩa"
@@ -31,7 +31,7 @@ export default function Project(){
         <main class="projectpage" id="main">
             <ProjectList 
             description = "Lorem ipsum dolor sit amet consectetur adipiscing elit. aliquam tincidunt elementum sem" 
-            list = {list}
+            listProject = {listProject}
             />
         </main>
     )
