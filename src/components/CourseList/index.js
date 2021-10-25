@@ -17,20 +17,13 @@ export function CourseList({title, description, smallTitle, name, list}){
                 }
                 <div className="textbox">
                     { 
-                        smallTitle ? (<h3 class="sub-title">{smallTitle}</h3>) : null
+                        smallTitle ? (<h3 className="sub-title">{smallTitle}</h3>) : null
                     }
                     <h2 className="main-title">{name}</h2>
                 </div>
                 <div className="list row">
                     {list.map((o, i) => (
-                        <CourseItem 
-                        key={i}
-                        status = {o.status} 
-                        person = {o.person} 
-                        liked = {o.liked} 
-                        name = {o.name} 
-                        description = {o.description} 
-                        teacher = {o.teacher} />
+                        <CourseItem key={i} {...o} />
                     ))};
                 </div>
             </div>

@@ -1,6 +1,6 @@
 export default function HistoryBill(){
     return(
-        <div className="tab4" style={{display: 'none'}}>
+        <div className="tab4">
                   <div className="item itemhistory">
                     <div className="name">Khóa học CFD1-offline</div>
                     <div className="date">09/09/2020</div>

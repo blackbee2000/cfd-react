@@ -1,4 +1,8 @@
-export default function Content(){
+
+export default function Content(props){
+    const course = props.location.state;
+    console.log(course);
+
     return(
         <section className="section-2">
         <div className="container">
@@ -100,7 +104,7 @@ export default function Content(){
                 <img src="img/avatar-lg.png" alt="" />
               </div>
               <div className="info">
-                <div className="name">TRẦN NGHĨA</div>
+                <div className="name"></div>
                 <div className="title">Founder CFD &amp; Creative Front-End Developer</div>
                 <p className="intro">
                   My education, career, and even personal life have been molded by one simple principle;

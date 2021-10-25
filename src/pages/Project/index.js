@@ -28,7 +28,7 @@ export default function Project(){
         },
     ]
     return(
-        <main class="projectpage" id="main">
+        <main className="projectpage" id="main">
             <ProjectList 
             description = "Lorem ipsum dolor sit amet consectetur adipiscing elit. aliquam tincidunt elementum sem" 
             listProject = {listProject}

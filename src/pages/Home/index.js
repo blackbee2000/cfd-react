@@ -3,10 +3,12 @@ import Banner from "./components/Banner";
 import Carousel from "./components/Carousel";
 import CarouselBottom from "./components/CarouselBottom";
 import SpecialThing from "./components/SpecialThing";
+import { Link } from "react-router-dom";
 
 export default function Home(){
     var list = [
         {
+            id: "1",
             status: "end",
             person: "12",
             liked: "100",
@@ -15,6 +17,7 @@ export default function Home(){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "2",
             status: "end",
             person: "12",
             liked: "100",
@@ -23,6 +26,7 @@ export default function Home(){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "3",
             status: "happening",
             person: "12",
             liked: "100",
@@ -31,6 +35,7 @@ export default function Home(){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "4",
             status: "happening",
             person: "12",
             liked: "100",
@@ -39,6 +44,7 @@ export default function Home(){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "5",
             status: "upcoming",
             person: "12",
             liked: "100",
@@ -47,6 +53,7 @@ export default function Home(){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "6",
             status: "upcoming",
             person: "12",
             liked: "100",
@@ -56,7 +63,7 @@ export default function Home(){
         },
     ]
     return(
-        <main class="homepage" id="main">
+        <main className="homepage" id="main">
             <Banner />
             <CourseList 
                 description="The readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it
@@ -84,10 +91,10 @@ export default function Home(){
             </section> */}
             <Carousel />
             <CarouselBottom />
-            <section class="section-action">
-                <div class="container">
+            <section className="section-action">
+                <div className="container">
                     <h3>Bạn đã sẵn sàng trở thành chiến binh tiếp theo của Team CFD chưa?</h3>
-                    <div class="btn main round bg-white">Đăng ký</div>
+                    <Link to="/collab" className="btn main round bg-white">Đăng ký</Link>
                 </div>
             </section>
         </main>
