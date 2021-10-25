@@ -16,23 +16,35 @@ export default function CourseItem({id, status, person, liked, name, description
             break;
     }
     return(
-        <div className="col-md-4 course">
+        <Link to={{
+            pathname: `/courseDetail/${id}`,
+            state: {
+                id: id,
+                status: status,
+                person: person,
+                liked: liked,
+                name: name,
+                description: description,
+                teacher: teacher,
+            }
+        }}
+         className="col-md-4 course">
             <div className="wrap">
                 <a className="cover" href="#">
-                    <img src="img/img1.png" alt="" />
+                    <img src="/img/img1.png" alt="" />
                     {statusTag}
                     <div className="hover">
                         <div className="top">
                             <div className="user">
-                                <img src="img/icon-user-white.svg" alt="" />
+                                <img src="/img/icon-user-white.svg" alt="" />
                                 {person}
                             </div>
                             <div className="heart">
-                                <img src="img/icon-heart.svg" alt="" /> {liked}
+                                <img src="/img/icon-heart.svg" alt="" /> {liked}
                             </div>
                         </div>
                         <div className="share">
-                            <img src="img/icon-viewmore.svg" alt="" />
+                            <img src="/img/icon-viewmore.svg" alt="" />
                         </div>
                     </div>
                 </a>
@@ -47,7 +59,7 @@ export default function CourseItem({id, status, person, liked, name, description
                 <div className="bottom">
                     <div className="teacher">
                         <div className="avatar">
-                        <img src="img/avt.png" alt="" />
+                        <img src="/img/avt.png" alt="" />
                         </div>
                         <div className="name">{teacher}</div>
                     </div>
@@ -67,6 +79,6 @@ export default function CourseItem({id, status, person, liked, name, description
                     </Link>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }

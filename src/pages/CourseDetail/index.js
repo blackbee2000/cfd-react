@@ -1,12 +1,10 @@
-import BannerDetail from "./components/BannerDetail";
-import Content from "./components/Content";
 import { CourseList } from "../../components";
 
 export default function CourseDetail(props){
     const course = props.location.state;
-    console.log('haha', course);
     var list = [
         {
+            id: "1",
             status: "end",
             person: "12",
             liked: "100",
@@ -15,6 +13,7 @@ export default function CourseDetail(props){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "2",
             status: "end",
             person: "12",
             liked: "100",
@@ -23,6 +22,7 @@ export default function CourseDetail(props){
             teacher: "Trần Nghĩa"
         },
         {
+            id: "3",
             status: "happening",
             person: "12",
             liked: "100",
@@ -33,8 +33,6 @@ export default function CourseDetail(props){
     ]
     return(
         <main className="course-detail" id="main">
-            {/* <BannerDetail /> */}
-            {/* <Content /> */}
             <section className="banner style2">
                 <div className="container">
                 <div className="info">
@@ -51,7 +49,7 @@ export default function CourseDetail(props){
                 <div className="container">
                     <div className="video">
                     <div className="icon">
-                        <img src="img/play-icon-white.png" alt="" />
+                        <img src="/img/play-icon-white.png" alt="" />
                     </div> <span>giới thiệu</span>
                     </div>
                     <div className="money">4.000.000 VND</div>
@@ -65,7 +63,7 @@ export default function CourseDetail(props){
                     your apps.</p>
                 <h2 className="title">giới thiệu về khóa học</h2>
                 <div className="cover">
-                    <img src="img/course-detail-img.png" alt="" />
+                    <img src="/img/course-detail-img.png" alt="" />
                 </div>
                 <h3 className="title">nội dung khóa học</h3>
                 <div className="accordion">
@@ -155,10 +153,10 @@ export default function CourseDetail(props){
                 <div className="teaches">
                     <div className="teacher">
                     <div className="avatar">
-                        <img src="img/avatar-lg.png" alt="" />
+                        <img src="/img/avatar-lg.png" alt="" />
                     </div>
                     <div className="info">
-                        <div className="name"></div>
+                        <div className="name">{course?.teacher}</div>
                         <div className="title">Founder CFD &amp; Creative Front-End Developer</div>
                         <p className="intro">
                         My education, career, and even personal life have been molded by one simple principle;
@@ -176,11 +174,11 @@ export default function CourseDetail(props){
                 </div>
                 <div className="bottom">
                     <div className="user">
-                    <img src="img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký
+                    <img src="/img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký
                     </div>
                     <div className="btn main btn-register round">đăng ký</div>
                     <div className="btn-share btn overlay round btn-icon">
-                    <img src="img/facebook.svg" alt="" />
+                    <img src="/img/facebook.svg" alt="" />
                     </div>
                 </div>
                 </div>
