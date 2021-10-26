@@ -1,4 +1,5 @@
 import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import DoneProject from "./components/DoneProject";
 import HistoryBill from "./components/HistoryBill";
 import Info from "./components/Info";
@@ -8,16 +9,17 @@ import YourCourse from "./components/YourCourse";
 export default function Profile(){
 
     let { url } = useRouteMatch();
+    let {user} = useAuth();
+    
     return(
         <main className="profile" id="main">
         <section>
           <div className="top-info">
             <div className="avatar">
-              {/* <span class="text">H</span> */}
-              <img src="img/avatar-lg.png" alt="" />
+              <img src={user?.avatar} alt="" />
               <div className="camera" />
             </div>
-            <div className="name">trần nghĩa</div>
+            <div className="name">{user?.name}</div>
             <p className="des">Thành viên của team CFD1-OFFLINE</p>
           </div>
           <div className="container">

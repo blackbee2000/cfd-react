@@ -13,31 +13,41 @@ import Team from "./pages/Team";
 import Pay from "./pages/Pay";
 import { Header, Footer, NavBar } from "./components";
 import { BrowserRouter as Router, Switch,Route } from "react-router-dom";
+import { createContext } from "react";
+
+export const Context = createContext();
 
 export default function App() {
+
+  const user = {
+    name: 'Đặng Thuyền Vương',
+    avatar: '/img/avt.png',
+  }
+
   return (
     <Router>
-      <Header />
-      <NavBar />
-      <div className="overlay_nav"></div>
-      
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/course" component={Course} />
-        <Route path="/project" component={Project} />
-        <Route path="/courseDetail/:id" component={CourseDetail} />
-        <Route path="/email" component={Email} />
-        <Route path="/faq" component={Faq} />
-        <Route path="/coinIntroduce" component={CoinIntroduce} />
-        <Route path="/collab" component={Collab} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/pay" component={Pay} />
-        <Route path="/register" component={Register} />
-        <Route path="/team" component={Team} />
-        <Route component={Page404} />
-      </Switch>
-
-      <Footer />
+      <Context.Provider value={{user}}>
+        <Header />
+        <NavBar />
+        <div className="overlay_nav"></div>
+        
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/course" component={Course} />
+          <Route path="/project" component={Project} />
+          <Route path="/courseDetail/:id" component={CourseDetail} />
+          <Route path="/email" component={Email} />
+          <Route path="/faq" component={Faq} />
+          <Route path="/coinIntroduce" component={CoinIntroduce} />
+          <Route path="/collab" component={Collab} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/pay" component={Pay} />
+          <Route path="/register" component={Register} />
+          <Route path="/team" component={Team} />
+          <Route component={Page404} />
+        </Switch>
+        <Footer />
+      </Context.Provider>
     </Router>
   );
 }

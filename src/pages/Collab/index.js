@@ -1,54 +1,14 @@
-import { useState } from "react";
+
 import { useHistory } from "react-router";
 import '../../assets/custom.scss';
-import './collab.scss';
-
-const phonePattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
-const emailPattern = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/
-const urlPattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+import { useForm } from "../../hooks/useForm";
 
 export default function Collab(){
 
-    const [form, setForm] = useState({
-      name: ''
-    });
-    const [error, setError] = useState({});
-    const history = useHistory();
-    
-    const handleInputChange = (ev) => {
-      let name = ev.currentTarget.name;
-      let value = ev.currentTarget.value;
-      setForm({
-        ...form,
-        [name]: value,
-      })
-    }
-
+    let { register, form, handleSubmit, error } = useForm();
+    let history = useHistory();
     const submit = () => {
-      let errObject = {};
-      if(!form.name){
-        errObject.name = "*Vui lòng nhập họ và tên";
-      }
-      if(!phonePattern.test(form.phone)){
-        errObject.phone = "*Vui lòng nhập đúng định dạng số điện thoại";
-      }
-      if(!emailPattern.test(form.email)){
-        errObject.email = "*vui lòng nhập đúng định dạng email";
-      }
-      if(!urlPattern.test(form.url)){
-        errObject.url = "*Vui lòng nhập đúng định dạng url";
-      }
-      if(!form.title){
-        errObject.title = "*Vui lòng nhập tiêu đề";
-      }
-      if(!form.note){
-        errObject.note = "*Vui lòng nhập nội dung";
-      }
-
-      setError(errObject);
-      if(Object.keys(errObject).length === 0){
-        history.push("/");
-      }
+      history.push("/");
     }
 
     return(
@@ -60,39 +20,48 @@ export default function Collab(){
             Đừng ngần ngại liên hệ với <strong>CFD</strong> để cùng nhau tạo ra những sản phẩm giá trị, cũng như
             việc hợp tác với các đối tác tuyển dụng và công ty trong và ngoài nước.
           </p>
-          <div className="form">
-            <label>
-              <p>Họ và tên<span>*</span></p>
-              <input onChange={handleInputChange} value={form.name} name="name" type="text" placeholder="Họ và tên bạn" />
+          <form className="form" onSubmit={handleSubmit(submit)}>
+            <label className={error.name && 'form_label'}>
+                <p>Họ và tên<span>*</span></p>
+                <div className="form_label-text">
+                  <input className={error.name && 'input-error'} {...register('name', {required: true})} type="text" placeholder="Họ và tên bạn" />
+                  { error.name && <p className="error-text">{error.name}</p> }
+                </div>
             </label>
-            { error.name && <p className="error-text">{error.name}</p> }
-            <label>
-              <p>Số điện thoại</p>
-              <input onChange={handleInputChange} value={form.phone} name="phone" type="text" placeholder="Số điện thoại" />
+            <label className={error.phone && 'form_label'}>
+                <p>Số điện thoại<span>*</span></p>
+                <div className="form_label-text">
+                  <input className={error.phone && 'input-error'} {...register('phone', {patern: 'phone'})} type="text" placeholder="Số điện thoại" />
+                  { error.phone && <p className="error-text">{error.phone}</p> }
+                </div>
             </label>
-            { error.phone && <p className="error-text">{error.phone}</p> }
-            <label>
-              <p>Email<span>*</span></p>
-              <input onChange={handleInputChange} value={form.email} name="email" type="text" placeholder="Email của bạn" />
+            <label className={error.email && 'form_label'}>
+                <p>Email<span>*</span></p>
+                <div className="form_label-text">
+                  <input className={error.email && 'input-error'} {...register('email', {patern: 'email'})} type="text" placeholder="Email của bạn" />
+                  { error.email && <p className="error-text">{error.email}</p> }
+                </div>
             </label>
-            { error.email && <p className="error-text">{error.email}</p> }
-            <label>
+            <label className={error.url && 'form_label'}>
               <p>Website</p>
-              <input onChange={handleInputChange} value={form.url} name="url" type="text" placeholder="Đường dẫn website http://" />
+              <div className="form_label-text">
+                <input className={error.url && 'input-error'} {...register('url', {patern: 'url'})} type="text" placeholder="https://facebook.com" />
+                { error.url && <p className="error-text">{error.url}</p> }
+              </div>
             </label>
-            { error.url && <p className="error-text">{error.url}</p> }
-            <label>
+            <label className={error.title && 'form_label'}>
               <p>Tiêu đề<span>*</span></p>
-              <input onChange={handleInputChange} value={form.title} name="title" type="text" placeholder="Tiêu đề liên hệ" />
+              <div className="form_label-text">
+                  <input className={error.title && 'input-error'} {...register('title', {required: true})} type="text" placeholder="Tiêu đề liên hệ" />
+                  { error.title && <p className="error-text">{error.title}</p> }
+                </div>
             </label>
-            { error.title && <p className="error-text">{error.title}</p> }
             <label>
               <p>Nội dung<span>*</span></p>
-              <textarea onChange={handleInputChange} value={form.note} name="note" id cols={30} rows={10} defaultValue={""} />
+              <textarea name="note" id cols={30} rows={10} defaultValue={""} />
             </label>
-            { error.note && <p className="error-text">{error.note}</p> }
-            <div className="btn main rect" onClick={submit}>đăng ký</div>
-          </div>
+            <button className="btn main rect" type="submit" style={{marginTop: 30}}>đăng ký</button>
+          </form>
         </section>
         {/* <div class="register-success">
             <div class="contain">
