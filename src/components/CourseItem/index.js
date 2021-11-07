@@ -1,84 +1,72 @@
 import { Link } from "react-router-dom";
+import { generatePath } from "react-router";
+import { Skeleton } from '@mui/material'
 
-export default function CourseItem({id, status, person, liked, name, description, teacher}){
-    var statusTag;
-    switch (status) {
-        case "end":
-            statusTag = <span className="badge b1">Đã kết thúc</span>;
-            break;
-        case "happening":
-            statusTag = <span className="badge b2">Đang diễn ra</span>;
-            break;
-        case "upcoming":
-            statusTag = <span className="badge b3">Sắp khai giảng</span>;
-            break;
-        default:
-            break;
-    }
+export default function CourseItem(props){
+    let badgeClass = props.course_status === 'da-ket-thuc' ? 'b1' : props.course_status === 'dang-dien-ra' ? 'b2' : 'b3'
     return(
-        <Link to={{
-            pathname: `/courseDetail/${id}`,
-            state: {
-                id: id,
-                status: status,
-                person: person,
-                liked: liked,
-                name: name,
-                description: description,
-                teacher: teacher,
-            }
-        }}
-         className="col-md-4 course">
+        <div className="col-md-4 course">
             <div className="wrap">
-                <a className="cover" href="#">
-                    <img src="/img/img1.png" alt="" />
-                    {statusTag}
-                    <div className="hover">
-                        <div className="top">
-                            <div className="user">
-                                <img src="/img/icon-user-white.svg" alt="" />
-                                {person}
+                {
+                    !props.loading ? (
+                        <Link className="cover" to={'/courseDetail/' + props.slug}>
+                            <img src={props.thumbnail.link} alt="" />
+                            <span className={`badge ${badgeClass}`}>{props.course_status === 'da-ket-thuc' ? 'Đã kết thúc' : props.course_status === 'dang-dien-ra' ? "Đang diễn ra" : "Sắp khai giảng"}</span>
+                            <div className="hover">
+                                <div className="top">
+                                    <div className="user">
+                                        <img src="/img/icon-user-white.svg" alt="" />
+                                        {15}
+                                    </div>
+                                    <div className="heart">
+                                        <img src="/img/icon-heart.svg" alt="" /> {200}
+                                    </div>
+                                </div>
+                                <div className="share">
+                                    <img src="/img/icon-viewmore.svg" alt="" />
+                                </div>
                             </div>
-                            <div className="heart">
-                                <img src="/img/icon-heart.svg" alt="" /> {liked}
+                        </Link>                                 
+                    ):(
+                        <Skeleton height={250} />
+                    )
+                }
+                {
+                    !props.loading ? (
+                        <div className="info">
+                            <a className="name" href="#">
+                                {props.title}
+                            </a>
+                            <p className="des">
+                                {props.short_description}
+                            </p>
+                        </div>
+                    ):(
+                        <div className="info">
+                            <Skeleton variant="text" />
+                            <Skeleton variant="text" height={30} />
+                        </div>
+                    )
+                }
+                {
+                    !props.loading ? (
+                        <div className="bottom">
+                            <div className="teacher">
+                                <div className="avatar">
+                                <img src={props.teacher.avatar.link} alt="" />
+                                </div>
+                                <div className="name">{props.teacher.title}</div>
                             </div>
+                            <Link to={generatePath("/register/:slug", props)} className="register-btn">
+                                Đăng ký
+                            </Link>
                         </div>
-                        <div className="share">
-                            <img src="/img/icon-viewmore.svg" alt="" />
-                        </div>
-                    </div>
-                </a>
-                <div className="info">
-                    <a className="name" href="#">
-                        {name}
-                    </a>
-                    <p className="des">
-                        {description}
-                    </p>
-                </div>
-                <div className="bottom">
-                    <div className="teacher">
-                        <div className="avatar">
-                        <img src="/img/avt.png" alt="" />
-                        </div>
-                        <div className="name">{teacher}</div>
-                    </div>
-                    <Link to={{
-                            pathname: `/courseDetail/${id}`,
-                            state: {
-                                id: id,
-                                status: status,
-                                person: person,
-                                liked: liked,
-                                name: name,
-                                description: description,
-                                teacher: teacher,
-                            }
-                        }} className="register-btn">
-                        Đăng ký
-                    </Link>
-                </div>
+                    ):(
+                        <Skeleton height={50} />
+                    )
+                }
+                
             </div>
-        </Link>
+        </div>
     )
 }

@@ -4,75 +4,45 @@ import Carousel from "./components/Carousel";
 import CarouselBottom from "./components/CarouselBottom";
 import SpecialThing from "./components/SpecialThing";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import courseService from "../../services/courseService";
+import Loading from "../../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchListCourseAction } from "../../store/action/courseAction";
 
 export default function Home(){
-    var list = [
-        {
-            id: "1",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "2",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "3",
-            status: "happening",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "4",
-            status: "happening",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "5",
-            status: "upcoming",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "6",
-            status: "upcoming",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-    ]
+
+    let [state, setState] = useState({
+        data: {},
+        loading: true
+    });
+
+    let dispatch = useDispatch();
+    const {offline, online} = useSelector(state => state.course)
+
+    useEffect(async () =>{
+        let data  = await courseService.home();
+        let course = dispatch(fetchListCourseAction());
+        setState({
+            data: data,
+            loading: false
+        })
+    }, []);
+    
+    console.log('dataaa', online)
+    let {data, loading} = state;
+    // if(loading) return <Loading/>;
     return(
         <main className="homepage" id="main">
-            <Banner />
+            {/* <Banner /> */}
             <CourseList 
                 description="The readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it
                 has a more-or-less normal" 
                 name = "Khóa học Offline"
-                list = {list}
+                list = {offline}
             />
-            <CourseList name = "Khóa học Online" list = {list}/>
-            <SpecialThing />
+            <CourseList name = "Khóa học Online" list = {online}/>
+            {/* <SpecialThing /> */}
             {/* <section class="section-3">
                 <div class="container">
                     <div class="video">
@@ -89,14 +59,14 @@ export default function Home(){
                     </div>
                 </div>
             </section> */}
-            <Carousel />
-            <CarouselBottom />
+            {/* <Carousel review={data.review}/>
+            <CarouselBottom gallery={data.gallery}/>
             <section className="section-action">
                 <div className="container">
                     <h3>Bạn đã sẵn sàng trở thành chiến binh tiếp theo của Team CFD chưa?</h3>
                     <Link to="/collab" className="btn main round bg-white">Đăng ký</Link>
                 </div>
-            </section>
+            </section> */}
         </main>
     )
 }

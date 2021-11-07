@@ -1,48 +1,37 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { CourseList } from "../../components";
+import Loading from "../../components/Loading";
+import courseService from "../../services/courseService";
+import Moment from "react-moment";
 
-export default function CourseDetail(props){
-    const course = props.location.state;
-    var list = [
-        {
-            id: "1",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "2",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "3",
-            status: "happening",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-    ]
+export default function CourseDetail(){
+
+    let [detail, setDetail] = useState();
+    let [related, setRelated] = useState();
+    let {slug} = useParams();
+
+    useEffect(async () =>{
+        let dataDetail = await courseService.detail(slug);
+        setDetail(dataDetail);
+        let dataRelated = await courseService.related(slug);
+        setRelated(dataRelated);
+    }, [slug]);
+
+    if(!detail) return <Loading />
     return(
         <main className="course-detail" id="main">
-            <section className="banner style2">
+            <section className="banner style2" style={{background: '#cde6fb'}}>
                 <div className="container">
                 <div className="info">
-                    <h1>Thực Chiến
-                    front-end căn bản</h1>
+                    <h1>{detail.data.title}</h1>
                     <div className="row">
-                    <div className="date"><strong>Khai giảng:</strong> 12/10/2020</div>
+                    <div className="date"><strong>Khai giảng: </strong> 
+                        <Moment format="DD/MM/YYYY">{detail.data.opening_time}</Moment>
+                    </div>
                     <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
                     </div>
-                    <div className="btn white round">đăng ký</div>
+                    <div className="btn white round" style={{background: '#70b6f1'}}>đăng ký</div>
                 </div>
                 </div>
                 <div className="bottom">
@@ -52,85 +41,38 @@ export default function CourseDetail(props){
                         <img src="/img/play-icon-white.png" alt="" />
                     </div> <span>giới thiệu</span>
                     </div>
-                    <div className="money">4.000.000 VND</div>
+                    <div className="money">{(detail.data.money).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</div>
                 </div>
                 </div>
             </section>
             <section className="section-2">
                 <div className="container">
-                <p className="des">Many Laravel apps don’t warrant the complexity of a full front-end framework like Vue or
-                    React. In this series, we’ll walk through a handful of simple ways to add dynamic functionality to
-                    your apps.</p>
+                <p className="des">{detail.data.long_description}</p>
                 <h2 className="title">giới thiệu về khóa học</h2>
                 <div className="cover">
                     <img src="/img/course-detail-img.png" alt="" />
                 </div>
                 <h3 className="title">nội dung khóa học</h3>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 1</div>
-                    <h3>Giới thiệu HTML, SEO, BEM.</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 2</div>
-                    <h3>CSS, CSS3, Flexbox, Grid</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 3</div>
-                    <h3>Media Queries</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 4</div>
-                    <h3>Boostrap 4</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 5</div>
-                    <h3>Thực hành dự án website Landing Page</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
-                <div className="accordion">
-                    <div className="accordion__title">
-                    <div className="date">Ngày 6</div>
-                    <h3>Cài đặt Grunt và cấu trúc thư mục dự án</h3>
-                    </div>
-                    <div className="content">
-                    I'd like to demonstrate a powerful little pattern called “Server-Fetched Partials” that offers
-                    some tangible benefits over alternatives like VueJS for simple page interactions.
-                    </div>
-                </div>
+                {
+                    detail.data.content.map((e, i) => (
+                        <div className="accordion">
+                            <div className="accordion__title">
+                                <div className="date">Ngày {i+1}</div>
+                                <h3>{e.title}</h3>
+                            </div>
+                            <div className="content">
+                            {e.content}
+                            </div>
+                        </div>
+                    ))
+                }
                 <h3 className="title">yêu cầu cần có</h3>
                 <div className="row row-check">
-                    <div className="col-md-6">Đã từng học qua HTML, CSS</div>
-                    <div className="col-md-6">Cài đặt phần mềm Photoshop,
-                    Adobe illustrator, Skype</div>
+                    {
+                        detail.data.required.map((e, i) => (
+                            <div className="col-md-6">{e.content}</div>
+                        ))
+                    }
                 </div>
                 <h3 className="title">hình thức học</h3>
                 <div className="row row-check">
@@ -153,22 +95,13 @@ export default function CourseDetail(props){
                 <div className="teaches">
                     <div className="teacher">
                     <div className="avatar">
-                        <img src="/img/avatar-lg.png" alt="" />
+                        <img src={detail.data.teacher.avatar.link} alt="" />
                     </div>
                     <div className="info">
-                        <div className="name">{course?.teacher}</div>
-                        <div className="title">Founder CFD &amp; Creative Front-End Developer</div>
-                        <p className="intro">
-                        My education, career, and even personal life have been molded by one simple principle;
-                        well
-                        designed information resonates with people and can change lives.I have a passion for
-                        making
-                        information resonate. It all starts with how people think. With how humans work. As
-                        humans
-                        we have learned how to read and write and while that is incredible, we are also already
-                        hard-wired to do some things a bit more "automatically"
-                        </p>
-                        <p><strong>Website:</strong> <a href="#">http://nghiatran.info</a></p>
+                        <div className="name">{detail.data.teacher.title}</div>
+                        <div className="title">{detail.data.teacher.position}</div>
+                        <p className="intro">{detail.data.teacher.description}</p>
+                        <p><strong>Website:</strong> <a href= {detail.data.teacher.website}> {detail.data.teacher.website}</a></p>
                     </div>
                     </div>
                 </div>
@@ -186,12 +119,12 @@ export default function CourseDetail(props){
             <CourseList 
                 smallTitle = "DỰ ÁN"
                 name = "THÀNH VIÊN"
-                list = {list}
+                list = {related?.data}
             />
             <CourseList 
                 smallTitle = "KHÓA HỌC"
                 name = "LIÊN QUAN"
-                list = {list}
+                list = {related?.data}
             />
         </main>
     )

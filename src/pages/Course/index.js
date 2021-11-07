@@ -1,62 +1,19 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CourseList } from "../../components";
+import { fetchListCourseAction } from "../../store/action/courseAction";
 
 export default function Course(){
-    var list = [
-        {
-            id: "1",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "2",
-            status: "end",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "3",
-            status: "happening",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "4",
-            status: "happening",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "5",
-            status: "upcoming",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-        {
-            id: "6",
-            status: "upcoming",
-            person: "12",
-            liked: "100",
-            name: "Front-end Căn Bản",
-            description: "One of the best corporate fashion brands in Sydney",
-            teacher: "Trần Nghĩa"
-        },
-    ]
+    
+    let dispatch = useDispatch();
+    const {offline, online} = useSelector(state => state.course);
+
+    useEffect(() =>{
+        if(!offline){
+            dispatch(fetchListCourseAction());
+        }
+    }, []);
+
     return(
         <main className="homepage" id="main">
             <CourseList
@@ -65,12 +22,12 @@ export default function Course(){
                     has a more-or-less normal" 
                     smallTitle = "Khóa học"
                     name = "ONLINE"
-                    list = {list}
+                    list = {online}
                 />
             <CourseList
                     smallTitle = "Khóa học"
                     name = "OFFLINE"
-                    list = {list}
+                    list = {offline}
                 />
         </main>
     )

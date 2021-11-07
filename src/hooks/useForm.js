@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const phonePattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
-const emailPattern = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/
+const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const urlPattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 
 export const useForm = (initValue = {}) => {
@@ -31,9 +31,17 @@ export const useForm = (initValue = {}) => {
                 if(r.patern === 'email') patern = emailPattern;
                 if(r.patern === 'url') patern = urlPattern;
 
-                if(!patern.test(form[i])){
+                if(typeof patern['test'] !== 'undefined'  && !patern?.test(form[i])){
                     errObject[i] = "*Vui lòng nhập đúng định dạng";
                 }
+            }
+
+            if(r.min && ( typeof form[i] === 'undefined' || form[i].length < r.min)){
+                errObject[i] = `Vui lòng nhập lớn hơn ${r.min} ký tự`;
+            }
+
+            if(r.max && form[i]?.length > r.max){
+                errObject[i] = `Vui lòng nhập nhỏ hơn ${r.max} ký tự`;
             }
         }
         setError(errObject);

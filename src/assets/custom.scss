@@ -21,21 +21,21 @@
         }
     }
 }
-//login
-.popup-form{
-    display: none;
-    .wrap{
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        .ct_login{
-            .close{
-                z-index: 2000;
-            }
-        }
-        
+.form-login-input{
+    .input-error{
+        margin-bottom: 0 !important;
+        border: 1px solid red;
     }
-    &.popup-login-active{
-        display: block;
+    .error-text {
+        color: red;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 20px;
     }
+}
+.error-text-login{
+    color: red;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
 }

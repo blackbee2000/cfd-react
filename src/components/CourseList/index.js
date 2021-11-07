@@ -22,9 +22,15 @@ export function CourseList({title, description, smallTitle, name, list}){
                     <h2 className="main-title">{name}</h2>
                 </div>
                 <div className="list row">
-                    {list.map((o, i) => (
-                        <CourseItem key={i} {...o} />
-                    ))};
+                    {
+                        list ? (
+                            list.map((o, i) => (
+                                <CourseItem key={i} {...o} />
+                            ))
+                        ): (
+                            [...Array(6)].map((o, i) => (<CourseItem loading={true} key={i} {...o} />))
+                        )
+                    }
                 </div>
             </div>
       </section>

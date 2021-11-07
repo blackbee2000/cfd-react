@@ -1,13 +1,19 @@
-import { useHistory } from "react-router";
+import { useDispatch } from 'react-redux';
 import '../../../../assets/custom.scss';
+import useAuth from '../../../../hooks/useAuth';
 import { useForm } from "../../../../hooks/useForm";
+import authService from "../../../../services/authService";
+import { updateInfoAction } from '../../../../store/action/authAction';
 
 export default function Info(){
     
-    let { register, form, handleSubmit, error } = useForm();
-    let history = useHistory();
-    const submit = () => {
-      history.push("/profile");
+    let dispatch = useDispatch();
+    const { user } = useAuth();
+
+    let { register, form, handleSubmit, error } = useForm(user);
+    const submit = async (form) => {
+      const res = await authService.updateInfo(form);
+      dispatch(updateInfoAction(form));
     }
 
     return(

@@ -1,14 +1,25 @@
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import '../../assets/custom.scss';
 import { useForm } from "../../hooks/useForm";
+import courseService from "../../services/courseService";
+import { useEffect, useState } from "react";
 
 export default function Register(){
 
-   let { register, form, handleSubmit, error } = useForm();
-   let history = useHistory();
-   const submit = () => {
+    let [detail, setDetail] = useState();
+    let {slug} = useParams();
+    let { register, form, handleSubmit, error } = useForm();
+    let history = useHistory();
+
+    useEffect(async () =>{
+        let dataDetail = await courseService.detail(slug);
+        setDetail(dataDetail);
+    }, [slug]);
+
+    const submit = async (form) => {
+      await courseService.register(slug, form);
       history.push("/");
-   }
+    }
 
     return(
         <main className="register-course" id="main">
@@ -16,11 +27,11 @@ export default function Register(){
           <div className="container">
             <div className="wrap container">
               <div className="main-sub-title">ĐĂNG KÝ</div>
-              <h1 className="main-title">Thực chiến front-end căn bản </h1>
+              <h1 className="main-title"> {detail?.data.title} </h1>
               <div className="main-info">
-                <div className="date"><strong>Khai giảng:</strong> 15/11/2020</div>
-                <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
-                <div className="time"><strong>Học phí:</strong> 6.000.000 VND</div>
+                <div className="date"><strong>Khai giảng:</strong> {detail?.data.opening_time}</div>
+                <div className="time"><strong>Thời lượng:</strong> 18 buổi </div>
+                <div className="time"><strong>Học phí:</strong> {(detail?.data.money)?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</div>
               </div>
               <form className="form" onSubmit={handleSubmit(submit)}>
                 <label className={error.name && 'form_label'}>
